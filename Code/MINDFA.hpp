@@ -12,10 +12,10 @@ public:
 private:
     static void init()
     {
-        groupId = 0;
+        groupId = 1;
         groupIdMap.clear();
     }
-    
+
     static set<vector<StatePtr> > initSet(vector<StatePtr>& states)
     {
         vector<StatePtr> accepts;
@@ -60,7 +60,7 @@ private:
             if(m.find(key) == m.end()) m[key] = {s};
             else m[key].push_back(s);
         }
-        
+
         set<vector<StatePtr> > newset;
         for(auto kv : m)
             newset.insert(std::move(kv.second));
@@ -68,7 +68,7 @@ private:
         if(newset.size() > 1)
             UpdateGroupIdMap(newset);
         return newset;
-        
+
     }
 
     static set<vector<StatePtr> > partition(vector<StatePtr>& states)
@@ -131,5 +131,5 @@ private:
     }
 };
 
-int MINDFA::groupId = 0;
+int MINDFA::groupId = 1;
 map<StatePtr, int> MINDFA::groupIdMap;

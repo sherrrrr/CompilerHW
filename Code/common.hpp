@@ -3,12 +3,12 @@
 #include <string>
 #include <memory>
 #include <vector>
-#include <set> 
+#include <set>
 #include <iostream>
 #include <queue>
 using namespace std;
 
-#define DEBUG(x) cout << "fun:[" << __FUNCTION__ << "],line:[" << __LINE__ << "] " << #x << " : " << x << endl;
+#define DEBUG(x) cout << "fun:[" << __FUNCTION__ << "],line:[" << __LINE__ << "] " << #x << " : " << (x) << endl;
 
 const string DFAChars = "abcdefghijklmnopqrstuvwxyz*+?|";
 // 字符集 + ? * | a-z E
@@ -21,7 +21,8 @@ class State{
     static int id;
 public:
     int myid;
-    map<char, vector<StatePtr> > StateMap; 
+    // 在NFA中一个char对应多个StatePtr，但是在DFA中其实vector中只有一个元素
+    map<char, vector<StatePtr> > StateMap;
 
     static void init()
     {
@@ -32,7 +33,7 @@ public:
     {
         myid = id++;
     }
-    
+
     void addedge(char ch, StatePtr nextState)
     {
         if(StateMap.find(ch) == StateMap.end()){
@@ -66,12 +67,37 @@ public:
                 s -> display(prefix, visited);
         }
     }
-
-    bool operator<=(StatePtr another)
-    {
-        // TODO 子集，因此another能接受的，this可以不接受，another不能接受的，this一定不能接受
-    }
 };
+
+bool operator<=(StatePtr l, StatePtr r)
+{
+    set<pair<StatePtr, StatePtr>> visited;
+    // 子集，因此rhs能接受的，this可以不接受，rhs不能接受的，this一定不能接受
+    // 同时，this中能够接受的字符，rhs中也必须要能接受
+    queue<pair<StatePtr, StatePtr> > q;
+    q.push(make_pair(l, r));
+    while(!q.empty())
+    {
+        auto val = q.front();
+        visited.insert(val);
+        q.pop();
+        visited.insert(val);
+        auto lhs = val.first;
+        auto rhs = val.second;
+        // lhs 接受， rhs不接受，则不<=
+        if(lhs -> myid < 0 && rhs -> myid > 0) return false;
+        for(auto kv : lhs -> StateMap)
+        {
+            if(rhs -> StateMap.find(kv.first) == rhs -> StateMap.end()){
+                return false;
+            }
+            else if(visited.count(make_pair(kv.second[0], rhs -> StateMap[kv.first][0])) == 0){
+                q.push(make_pair(kv.second[0], rhs -> StateMap[kv.first][0]));
+            }
+        }
+    }
+    return true;
+}
 
 int State::id = 1;
 
@@ -83,14 +109,14 @@ class NFA{
 public:
     StatePtr in; // 入口State
     StatePtr out; // 出口State
-    
+
     // 每次创建NFA都会固定增加两个State
     NFA()
     {
         in = make_shared<State>();
         out = make_shared<State>();
     }
-    
+
     NFA(char ch)
     {
         in = make_shared<State>();
@@ -125,9 +151,24 @@ public:
         set<int> visited;
         st -> display("", visited);
     }
-    
-    bool operator<=(DFAPtr another)
-    {
-        // TODO
-    }
 };
+
+bool operator<=(DFAPtr lhs, DFAPtr rhs)
+{
+    return (lhs ->st <= rhs -> st);
+}
+// 注意这边的实现并不是 [ a<b = !(a>=b) ]这种
+bool operator<(DFAPtr lhs, DFAPtr rhs)
+{
+    return lhs <= rhs && !(rhs <= lhs);
+}
+
+bool operator>(DFAPtr lhs, DFAPtr rhs)
+{
+    return rhs <= lhs && !(lhs <= rhs);
+}
+
+bool operator==(DFAPtr lhs, DFAPtr rhs)
+{
+    return (lhs <= rhs) && (rhs <= lhs);
+}

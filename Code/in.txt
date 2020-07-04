@@ -1,0 +1,15 @@
+14
+(a*b*)* E|(a|b)*
+(ab)* E|a(ba)*b
+a*(a|b)* (a|b)*a*
+(a|b)*a* b*(a|b)*
+b*(a|b)* (a|b)*b*
+(a|b)*b* (a|b)*
+(a|b)* a*(a|b)*
+(a|b)*abb (a|b)*|a+ab
+(a|b)*abb (a|b)*a*a|b
+(a|b)*a?ab (a|b)*a*a|b
+(a|b)*abb (a|b)*a?ab
+(a|b)*|a+ab (a|b)*a?ab
+(a|b)*|a+ab (a|b)*a*a|b
+(a|b)*|a+ab (((a|b)))*|a+ab
