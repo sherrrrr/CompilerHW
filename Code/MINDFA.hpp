@@ -80,7 +80,6 @@ private:
         // 分为accept和不可accpet的
         set<vector<StatePtr> > groupSet = initSet(states);
         set<vector<StatePtr> > tmp;
-        size_t presize = 0;
         while(tmp.size() != groupSet.size())
         {
             tmp.clear();
