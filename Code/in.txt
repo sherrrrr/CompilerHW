@@ -1,8 +1,13 @@
-33
+37
+aa* a+
+aa**?+*?+*?+*??*+?* a+
 E E
 a a
 a E
 a b
+a** a*
+a++ a+
+a?? a?
 a* a?
 a* a+
 a? a+

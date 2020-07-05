@@ -41,7 +41,7 @@
 
 * 其他
 
-    还有具体实现时需要注意的一点就是，因为是连接时连上了就不会记录中间`State`信息了。因此例如`ba*`，假如读到`a`直接就转化，而之后再读到`*`的话就不好处理，因此对于单个字符以及`(xxx)`，在读取是都会先判断后一个字符是不是`*+?`，再进行处理。
+    还有具体实现时需要注意的一点就是，因为是连接时连上了就不会记录中间`State`信息了。因此例如`ba*`，假如读到`a`直接就转化，而之后再读到`*`的话就不好处理，因此对于单个字符以及`(xxx)`，在读取时会多读取之后的字符，直到读到的字符不是`*+?`。然后对这一段字符串，根据最后一个符号进行处理，一直递归处理下去。
 
     在转换完成之后，需要记录一个State为接受状态，实现时是利用State的id字段记录的，如果为-1，则表示为接受状态，并且转为NFA之后一定只有最后的那个State才需要标记为接受状态。
 
@@ -91,6 +91,7 @@
 
 * `*+?`
 
+    测试多个符号的等价性 `a** a*`,`a?? a?`,`a++ a+`
     两两配对测试，`a* a+`,`a? a+`,`a? a*`
 
 * `|`
@@ -138,8 +139,8 @@ b*(a|b)* (a|b)*b* =
 
 测试了长度1000和一个长度为2000的，长度2000的为另一个长度为1000的正则表达式`|`上前一个长度为1000的正则，结果正确，大概需要一秒得到结果，还能接受。
 
-`ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah` 
+`ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah`
 
-和 
+和
 
 `hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+e(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+ehf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*)?bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*|ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah`

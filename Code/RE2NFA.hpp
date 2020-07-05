@@ -42,31 +42,38 @@ private:
     }
 
     // 统一一下形式，还是返回一下吧
-    static NFAPtr str2NFA(string& innerExp, size_t pos2add, char nextChar, int& pos, NFAPtr pre)
+    static NFAPtr str2NFA(string& innerExp, int& pos, NFAPtr pre)
     {
        NFAPtr next;
-       switch(nextChar){
-           case '*' : {
-               next = start2NFA(innerExp);
-               pos += pos2add + 1;
-               break;
-           }
-           case '+' : {
-               next = add2NFA(innerExp);
-               pos += pos2add + 1;
-               break;
-           }
-           case '?' : {
-               next = q2NFA(innerExp);
-               pos += pos2add + 1;
-               break;
-           }
-           default : {
-               next = str2NFA(innerExp);
-               pos += pos2add;
-               break;
-           }
+       char lastChar = innerExp[innerExp.size() - 1];
+       switch(lastChar){
+            case '*' : {
+                string iinnerExp = innerExp.substr(0, innerExp.size() - 1);
+                next = start2NFA(iinnerExp);
+                break;
+            }
+            case '+' : {
+                string iinnerExp = innerExp.substr(0, innerExp.size() - 1);
+                next = add2NFA(iinnerExp);
+                break;
+            }
+            case '?' : {
+                string iinnerExp = innerExp.substr(0, innerExp.size() - 1);
+                next = q2NFA(iinnerExp);
+                break;
+            }
+            case ')' : {
+                // 读到)表示(xxx)*+?已经递归到了(xxx)，取出xxx即可
+                string iinnerExp = innerExp.substr(1, innerExp.size() - 2);
+                next = str2NFA(iinnerExp);
+                break;
+            }
+            default : {
+                next = str2NFA(innerExp);
+                break;
+            }
        }
+       pos += innerExp.length();
        if(!pre) return next;
        pre -> link(next);
        return pre;
@@ -113,7 +120,7 @@ private:
         // inner -> out -> addedge('E', inner -> in);
         return res;
     }
-        
+
     // 正则表达式后跟?的,只传入不包括?的部分
     static NFAPtr add2NFA(string& exp)
     {
@@ -124,7 +131,7 @@ private:
         inner -> out -> addedge('E', inner -> in);
         return res;
     }
-    
+
     static NFAPtr convert(string& exp)
     {
         NFAPtr res;
@@ -137,36 +144,39 @@ private:
             if(exp[pos] == '#') break;
             // a-z 根据下一个字符判断生成
             if( is_base(exp[pos]) ){
-                string innerExp = exp.substr(pos, 1);
-                res = str2NFA(innerExp, 1, exp[pos + 1], pos, res);
+                //找到下一个不是*+?的字符
+                int endpos = pos;
+                while(is_special(exp[++endpos])) ;
+                string innerExp = exp.substr(pos, endpos - pos);
+                res = str2NFA(innerExp, pos, res);
             }
             else if(exp[pos] == '('){
                 //括号匹配，找到相对应的下一个括号
-                size_t edpos = findClose(exp, pos);
-                if(edpos == -1){
+                size_t closePos = findClose(exp, pos);
+                if(closePos == -1){
                     if(pos >= 1)
-                        cerr << "ERROR when parse RE : " + exp.substr(pos - 1);
-                    else 
-                        cerr << "ERROR when parse RE : " + exp.substr(pos);
+                        cerr << "ERROR when find ) RE : " + exp.substr(pos - 1);
+                    else
+                        cerr << "ERROR when find ) RE : " + exp.substr(pos);
                     exit(0);
                 }
-                size_t pos2add = edpos - pos + 1;
-                char nextChar = exp[edpos + 1];
-                // 去掉括号的部分
-                string innerExp = exp.substr(pos + 1, pos2add - 2);
-                // 
-                res = str2NFA(innerExp, pos2add, nextChar, pos, res);
+                //找到下一个不是*+?的字符
+                int endpos = closePos;
+                while(is_special(exp[++endpos])) ;
+                string innerExp = exp.substr(pos, endpos - pos);
+                //
+                res = str2NFA(innerExp, pos, res);
             }
             else if(exp[pos] == '|')
             {
-                string second = exp.substr(pos + 1, exp.length() - 1 - pos - 1); 
+                string second = exp.substr(pos + 1, exp.length() - 1 - pos - 1);
                 res = or2NFA( res, second);
                 break;
             }
             else{
                 if(pos >= 1)
                     cerr << "ERROR when parse RE : " + exp.substr(pos - 1);
-                else 
+                else
                     cerr << "ERROR when parse RE : " + exp.substr(pos);
                 exit(0);
             }
