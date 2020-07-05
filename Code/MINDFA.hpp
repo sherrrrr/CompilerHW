@@ -16,6 +16,7 @@ private:
         groupIdMap.clear();
     }
 
+    // 初始化分组，以是否为接受状态做划分
     static set<vector<StatePtr> > initSet(vector<StatePtr>& states)
     {
         vector<StatePtr> accepts;
@@ -35,6 +36,7 @@ private:
         return res;
     }
 
+    // 划分之后更新每一个State对应的组号id
     static void UpdateGroupIdMap(set<vector<StatePtr> >& groupSet)
     {
         for(auto sset : groupSet)
@@ -44,7 +46,8 @@ private:
         }
     }
 
-
+    // 对于每一个group内的State，以他们接受一个字符之后进入的下一个State的
+    // 组号作为划分的key
     static set<vector<StatePtr> > partitionGroup(vector<StatePtr>& states)
     {
         // 根据每个State接受字符之后的下一个状态做映射
@@ -71,24 +74,27 @@ private:
 
     }
 
+    // 对DFA中所有的State做划分
     static set<vector<StatePtr> > partition(vector<StatePtr>& states)
     {
         // 分为accept和不可accpet的
         set<vector<StatePtr> > groupSet = initSet(states);
+        set<vector<StatePtr> > tmp;
         size_t presize = 0;
-        while(presize != groupSet.size())
+        while(tmp.size() != groupSet.size())
         {
-            presize = groupSet.size();
+            tmp.clear();
             for(auto sset : groupSet)
             {
                 set<vector<StatePtr> > newGroupSet = partitionGroup(sset);
-                groupSet.erase(sset);
-                groupSet.insert(newGroupSet.begin(), newGroupSet.end());
+                tmp.insert(newGroupSet.begin(), newGroupSet.end());
             }
+            tmp.swap(groupSet);
         }
         return groupSet;
     }
 
+    // 生成最小DFA时，根据分组的id得到对应的DFA节点，还不存在的话则会去创建
     static StatePtr getId2StatePtr(StatePtr origin, map<int, StatePtr>& id2StatePtr)
     {
         int id = groupIdMap[origin];
@@ -101,6 +107,7 @@ private:
         return id2StatePtr[id];
     }
 
+    // 根据现有的划分group创建新的DFA
     static DFAPtr build(set<vector<StatePtr> >& groupSet, StatePtr startPtr)
     {
         map<int, StatePtr> id2StatePtr;
