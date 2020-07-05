@@ -44,6 +44,8 @@ private:
         return res;
     }
 
+    // 假如还不存在NFA集合对应的DFA节点，则创建节点，并根据集合内是否有接受状态
+    // 改变DFA节点的接受状态
     static void addNewDFAState(map<set<StatePtr>, StatePtr>& m, set<StatePtr>& s)
     {
         m[s] = make_shared<State>();

@@ -84,8 +84,11 @@ int main()
     // test2();
     // test3();
 
+    // show_level = 1;
+    // string s = "hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+e(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+ehf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*)?bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*";
+    // translate(s);
 
-    show_level = 1;
+
     // translate("(a|b)*a*a|b");
     // judge("(a|b)*abb","(a|b)*a?ab");
     // judge("(a|b)*a?ab","(a|b)*abb");

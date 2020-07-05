@@ -1,4 +1,21 @@
-14
+33
+E E
+a a
+a E
+a b
+a* a?
+a* a+
+a? a+
+a|b a
+a|b a*
+a*|b a
+a|b c
+(a) a
+(a)* a
+(a)+ a
+(a)? a
+ab a
+EEEEEEEEEE EEEEEEEEEE
 (a*b*)* E|(a|b)*
 (ab)* E|a(ba)*b
 a*(a|b)* (a|b)*a*
@@ -9,7 +26,9 @@ b*(a|b)* (a|b)*b*
 (a|b)*abb (a|b)*|a+ab
 (a|b)*abb (a|b)*a*a|b
 (a|b)*a?ab (a|b)*a*a|b
-(a|b)*abb (a|b)*a?ab
+(a|b)*abb (a|b)*a?bb
 (a|b)*|a+ab (a|b)*a?ab
 (a|b)*|a+ab (a|b)*a*a|b
 (a|b)*|a+ab (((a|b)))*|a+ab
+ba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ah hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*
+ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+e(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+ehf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*)?bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*|ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah

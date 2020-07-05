@@ -1,4 +1,6 @@
-# 主要思路
+# 编译原理实验课实验报告
+
+## 算法思路
 
 ### 一. 实现正则表达式转最小DFA接口
 
@@ -75,3 +77,65 @@
 
 然后利用 `<=` 实现 `<`的逻辑，即 `d1 < d2` 需要 `d1 <= d2` 且 `!d2 <= d1`,`>=`同理。
 `==`的实现就是 `d1 <= d2` 且 `d2 <= d1`，最后就是不等于了。
+
+
+## 测试
+
+#### 一. 基本测试
+
+每个测试用例主要就是针对某几个符号进行测试。
+
+* 单个符号
+
+    `E E` `a a` `a E` `a b`测试最基本的正则表达式的正确性
+
+* `*+?`
+
+    两两配对测试，`a* a+`,`a? a+`,`a? a*`
+
+* `|`
+
+    对于`|`，对于形如`A | B`的正则表达式和`C`
+
+    假设`B ! C`
+
+    假如`A = C`，则`A|B > C`
+
+    假如`A < C`，则`A|B ! C`
+
+    假如`A > C`，则`A|B > C`
+
+    假如`A ! C`，则`A|B ! C`
+
+* 括号
+
+    `(a) a` `(a)+ a` `(a)* a` `(a)? a`
+
+* 连接
+
+    `ab a`
+
+然后做了一些复杂一点的正则表达式的测试
+
+```
+(a*b*)* E|(a|b)* =
+(ab)* E|a(ba)*b =
+a*(a|b)* (a|b)*a* =
+(a|b)*a* b*(a|b)* =
+b*(a|b)* (a|b)*b* =
+(a|b)*b* (a|b)* =
+(a|b)* a*(a|b)* =
+(a|b)*abb (a|b)*|a+ab <
+(a|b)*abb (a|b)*a*a|b !
+(a|b)*a?ab (a|b)*a*a|b !
+(a|b)*abb (a|b)*a?bb <
+(a|b)*|a+ab (a|b)*a?ab >
+(a|b)*|a+ab (a|b)*a*a|b >
+(a|b)*|a+ab (((a|b)))*|a+ab =
+```
+
+#### 二. 复杂度测试
+
+测试了长度1000和一个长度为2000的，为前一个正则|上另一个长度为1000的正则表达式，结果正确，基本也能够秒出结果。
+
+`ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah`  和 `hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+e(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+ehf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(hf*a(u?g+i|fo*ay+oahf*a(u?g+i|fo*ay+oa(hf*a(u?g+i|fo*ay+oaw*)eh?s+eabgo*(ia+f?ggzby*ga)+w?o((a|b)*abb(a|b)*a*a|b)?(aff(a|b)*abb(a|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*|b)*a*a|bff)*afh*)*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*)?bgo*(ia+f?ggzby*ga)+w?oafh*w*)eh?s+eabgo*(ia+f?ggzby*ga)+w?oafh*|ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah`

@@ -1,5 +1,5 @@
 #include "common.hpp"
-
+#include <exception>
 class RE2NFA{
 public:
     static NFAPtr translate(string& exp)
@@ -95,7 +95,6 @@ private:
     // 正则表达式后跟*的,只传入不包括*的部分
     static NFAPtr start2NFA(string& exp)
     {
-        //TODO 思路：调用convert得到NFA，然后加上*号的部分
         NFAPtr inner = convert(exp);
         NFAPtr res = make_shared<NFA>('E');
         res -> in -> addedge('E', inner -> in);
@@ -145,7 +144,11 @@ private:
                 //括号匹配，找到相对应的下一个括号
                 size_t edpos = findClose(exp, pos);
                 if(edpos == -1){
-                    cout << "parse error" << endl;
+                    if(pos >= 1)
+                        cerr << "ERROR when parse RE : " + exp.substr(pos - 1);
+                    else 
+                        cerr << "ERROR when parse RE : " + exp.substr(pos);
+                    exit(0);
                 }
                 size_t pos2add = edpos - pos + 1;
                 char nextChar = exp[edpos + 1];
@@ -159,6 +162,13 @@ private:
                 string second = exp.substr(pos + 1, exp.length() - 1 - pos - 1); 
                 res = or2NFA( res, second);
                 break;
+            }
+            else{
+                if(pos >= 1)
+                    cerr << "ERROR when parse RE : " + exp.substr(pos - 1);
+                else 
+                    cerr << "ERROR when parse RE : " + exp.substr(pos);
+                exit(0);
             }
         }
         return res;
