@@ -75,7 +75,7 @@ private:
         {
             set<StatePtr> now = q.front();
             q.pop();
-            for(auto ch : DFAChars)
+            for(auto ch : Chars)
             {
                 set<StatePtr> newset = move(ch, now);
                 newset = getClosure(newset);

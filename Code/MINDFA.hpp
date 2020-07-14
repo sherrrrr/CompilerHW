@@ -55,7 +55,7 @@ private:
         for(auto s : states)
         {
             map<char, int > key;
-            for(auto ch : DFAChars)
+            for(auto ch : Chars)
             {
                 if(s -> StateMap.find(ch) != s -> StateMap.end())
                     key[ch] = groupIdMap[s -> StateMap[ch][0]];

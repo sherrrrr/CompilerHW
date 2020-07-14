@@ -7,8 +7,15 @@ public:
         State::init();
         NFAPtr res = convert(exp);
         StatePtr end = make_shared<State>();
+        StatePtr dead = make_shared<State>();
         end -> myid = -1; // 结束状态
         res -> out -> addedge('E', end);
+        // 对于其他字符，连接到死亡状态
+        for(auto ch : Chars)
+        {
+            if(res -> out -> StateMap.find(ch) == res -> out -> StateMap.end())
+                res -> out -> addedge(ch, dead);
+        }
         res -> out = end;
         return res;
     }

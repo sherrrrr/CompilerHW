@@ -45,6 +45,8 @@
 
     在转换完成之后，需要记录一个State为接受状态，实现时是利用State的id字段记录的，如果为-1，则表示为接受状态，并且转为NFA之后一定只有最后的那个State才需要标记为接受状态。
 
+    同时，对于最后一个状态，假如对于输入字符没有下一个状态，则将其连接到一个死亡状态，用于表示不可接受。
+
 ##### 3 NFA转DFA
 
 实现就是与之前的实验课的NFA类似，实现`move`以及`Closure`，得到`DFA`的每一个`State`。
@@ -137,7 +139,7 @@ b*(a|b)* (a|b)*b* =
 
 #### 二. 复杂度测试
 
-测试了长度1000和一个长度为2000的，长度2000的为另一个长度为1000的正则表达式`|`上前一个长度为1000的正则，结果正确，大概需要一秒得到结果，还能接受。
+测试了长度1000和一个长度为2000的，长度2000的为另一个长度为1000的正则表达式`|`上前一个长度为1000的正则，结果正确，大概需要一秒得到结果。
 
 `ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?aba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*a(ba+sdg*h(a+s?d|g*h((a|b)*|a+ab(((a|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah)oa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?aha(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah|b)))*|a+ab)+)agh?e*agba+s(d(a|b)*|a+ab(((a|b)))*|a+ab)*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahoa(hoba+sdg*h(a+s?d|g*ho+)agh?e*agoa(hogh|o?ho)?g?ahgh|o?ho)?g?ah`
 

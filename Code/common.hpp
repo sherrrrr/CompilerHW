@@ -10,7 +10,7 @@ using namespace std;
 
 #define DEBUG(x) cout << "fun:[" << __FUNCTION__ << "],line:[" << __LINE__ << "] " << #x << " : " << (x) << endl;
 
-const string DFAChars = "abcdefghijklmnopqrstuvwxyz*+?|";
+const string Chars = "abcdefghijklmnopqrstuvwxyz*+?|";
 // 字符集 + ? * | a-z E
 class State;
 
@@ -32,6 +32,11 @@ public:
     State()
     {
         myid = id++;
+    }
+
+    State(int num)
+    {
+        myid = num;
     }
 
     void addedge(char ch, StatePtr nextState)
